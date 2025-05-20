@@ -56,8 +56,7 @@ def main():
                     break
                 sock.sendto(chunk, client)
                 remaining -= len(chunk)
-                
-        sock.sendto(b"DONE", client)
+
         
 if __name__ == '__main__':
     import argparse
