@@ -45,7 +45,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--debug', action='store_true',
     help='The present debug message')
-    parser.add_argument('--address', type=str, default='127.0.0.1',
+    parser.add_argument('--address', type=str, default='0.0.0.0',
     help='The address to send data')
     parser.add_argument('--port', type=int, default=3034,
     help='The port to send data')
