@@ -47,7 +47,7 @@ def main():
         
         elif data[0] == 'DOWNLOAD':
             with open(file_info[data[1]]['path'], 'rb') as f:
-                file_size = file_info[data]['size']
+                file_size = file_info[data[1]]['size']
                 remaining = file_size
                 
                 while remaining > 0:
