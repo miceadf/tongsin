@@ -5,8 +5,6 @@ FLAGS = _ = None
 DEBUG = False
 
 FILES_DIR = __file__.replace('udp_server.py', 'files')
-CHUNK_SIZE = 8192
-read_size = 1500
 
 def get_file_list(directory):
     files = {}
@@ -50,8 +48,8 @@ def main():
             remaining = file_size
             
             while remaining > 0:
-                read_size = min(FLAGS.mtu, remaining)
-                chunk = f.read(read_size)
+                # read_size = min(FLAGS.mtu, remaining)
+                chunk = f.read(FLAGS.mtu)
                 if not chunk:
                     break
                 sock.sendto(chunk, client)
@@ -68,7 +66,7 @@ if __name__ == '__main__':
     help='The address to serve service')
     parser.add_argument('--port', type=int, default=3034,
     help='The port to serve service')
-    parser.add_argument('--mtu', type=int, default=read_size,
+    parser.add_argument('--mtu', type=int, default=1500,
     help='Max receive buffer size')
     
     FLAGS, _ = parser.parse_known_args()
