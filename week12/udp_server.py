@@ -4,7 +4,7 @@ import os
 FLAGS = _ = None
 DEBUG = False
 
-FILES_DIR = './week12/files'
+FILES_DIR = __file__.replace('udp_server.py', 'files')
 CHUNK_SIZE = 8192
 read_size = 1500
 
