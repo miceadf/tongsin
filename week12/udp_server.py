@@ -46,7 +46,7 @@ def main():
             sock.sendto(f"{file_info[data[1]]['size']}".encode('utf-8'), client)
         
         elif data[0] == 'DOWNLOAD':
-            with open(file_info[data]['path'], 'rb') as f:
+            with open(file_info[data[1]]['path'], 'rb') as f:
                 file_size = file_info[data]['size']
                 remaining = file_size
                 
