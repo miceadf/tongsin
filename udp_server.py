@@ -32,28 +32,31 @@ def main():
     
     while True:
         data, client = sock.recvfrom(2**16)
-        data = data.decode('utf-8').strip().split(' ')[1]
+        data = data.decode('utf-8').strip()
         print(f'Received {data} from {client}')
+        data = data.split(' ')
         
-        if data not in file_info:
+        if data[1] not in file_info:
             error_msg = "404 Not Found"
             sock.sendto(error_msg.encode('utf-8'), client)
             print(f"Sent error to {client}")
             continue
         
-        sock.sendto(f"{file_info[data]['size']}".encode('utf-8'), client)
+        elif data[0] == 'INFO':
+            sock.sendto(f"{file_info[data[1]]['size']}".encode('utf-8'), client)
         
-        with open(file_info[data]['path'], 'rb') as f:
-            file_size = file_info[data]['size']
-            remaining = file_size
-            
-            while remaining > 0:
-                read_size = min(FLAGS.mtu, remaining)
-                chunk = f.read(read_size)
-                if not chunk:
-                    break
-                sock.sendto(chunk, client)
-                remaining -= len(chunk)
+        elif data[0] == 'DOWNLOAD':
+            with open(file_info[data]['path'], 'rb') as f:
+                file_size = file_info[data]['size']
+                remaining = file_size
+                
+                while remaining > 0:
+                    read_size = min(FLAGS.mtu, remaining)
+                    chunk = f.read(read_size)
+                    if not chunk:
+                        break
+                    sock.sendto(chunk, client)
+                    remaining -= len(chunk)
 
         
 if __name__ == '__main__':
